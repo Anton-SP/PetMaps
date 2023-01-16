@@ -41,4 +41,11 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+
+    // Облегченная библиотека, содержит только карту, слой пробок,
+    // LocationManager, UserLocationLayer и возможность скачивать офлайн-карты (только в платной версии).
+    implementation 'com.yandex.android:maps.mobile:4.2.2-lite'
+
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.6'
 }
