@@ -30,8 +30,6 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
 
     private lateinit var map: GoogleMap
 
-    /*  private val callback = OnMapReadyCallback { googleMap ->
-          */
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -40,12 +38,7 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
      * If Google Play services is not installed on the device, the user will be prompted to
      * install it inside the SupportMapFragment. This method will only be triggered once the
      * user has installed Google Play services and returned to the app.
-     *//*
-        val sydney = LatLng(-34.0, 151.0)
-        map = googleMap
-       // googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-       // googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-    }*/
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,7 +52,6 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -76,9 +68,17 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
 
     override fun onMapReady(callbackMap: GoogleMap) {
         map = callbackMap
+        map.setPadding(0,0,12,0)
+        map.uiSettings.isZoomControlsEnabled = true
+        map.uiSettings.isMapToolbarEnabled = true
         callbackMap.setOnMyLocationButtonClickListener(this)
         callbackMap.setOnMyLocationClickListener(this)
         enableMyLocation()
+        map.setOnMapClickListener {
+            //map.clear()
+            map.addMarker(MarkerOptions().position(it))
+
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -125,16 +125,22 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
         // [END maps_check_location_permission]
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (permissionDenied) {
+            // Permission was not granted, display error dialog.
+            showMissingPermissionError()
+            permissionDenied = false
+        }
+    }
+
     private fun showMissingPermissionError() {
         newInstance(true).show(this.parentFragmentManager, "dialog")
     }
 
     companion object {
-        /**
-         * Request code for location permission request.
-         *
-         * @see .onRequestPermissionsResult
-         */
+
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 }

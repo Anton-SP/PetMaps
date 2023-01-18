@@ -49,12 +49,6 @@ object PermissionUtils {
         }
     }
 
-    /**
-     * Checks if the result contains a [PackageManager.PERMISSION_GRANTED] result for a
-     * permission from a runtime permissions request.
-     *
-     * @see androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
-     */
     @JvmStatic
     fun isPermissionGranted(
         grantPermissions: Array<String>, grantResults: IntArray,
@@ -68,9 +62,7 @@ object PermissionUtils {
         return false
     }
 
-    /**
-     * A dialog that displays a permission denied message.
-     */
+
     class PermissionDeniedDialog : DialogFragment() {
         private var finishActivity = false
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -96,10 +88,6 @@ object PermissionUtils {
         companion object {
             private const val ARGUMENT_FINISH_ACTIVITY = "finish"
 
-            /**
-             * Creates a new instance of this dialog and optionally finishes the calling Activity
-             * when the 'Ok' button is clicked.
-             */
             @JvmStatic
             fun newInstance(finishActivity: Boolean): PermissionDeniedDialog {
                 val arguments = Bundle().apply {
