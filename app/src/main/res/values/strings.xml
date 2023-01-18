@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PetMaps</string>
+    <string name="location_permission_denied">Loaction permission denied</string>
+    <string name="permission_required_toast">Require permission for correct work</string>
+    <string name="permission_rationale_location">"Provide rationale permission "</string>
 </resources>
