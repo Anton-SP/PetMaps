@@ -1,4 +1,4 @@
-package com.example.petmaps.db
+package com.example.petmaps.data.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

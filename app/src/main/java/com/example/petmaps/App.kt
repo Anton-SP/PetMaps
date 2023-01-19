@@ -2,7 +2,7 @@ package com.example.petmaps
 
 import android.app.Application
 import android.content.Context
-import com.example.petmaps.db.MarkersDatabase
+import com.example.petmaps.data.db.MarkersDatabase
 
 class App : Application() {
 

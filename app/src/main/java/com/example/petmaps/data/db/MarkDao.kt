@@ -1,10 +1,10 @@
-package com.example.petmaps.db
+package com.example.petmaps.data.db
 
 import androidx.room.*
 
 interface MarkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMark(mark:MarkEntity):Long
+    suspend fun insertMark(mark: MarkEntity):Long
 
     @Query("SELECT * FROM markers ORDER BY id DESC")
     fun getMarkerList():List<MarkEntity>

@@ -1,4 +1,4 @@
-package com.example.petmaps.db
+package com.example.petmaps.data.db
 
 import android.content.Context
 import androidx.room.Database

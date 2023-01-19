@@ -2,6 +2,7 @@ package com.example.petmaps.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.fragment.app.Fragment
@@ -13,15 +14,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.coroutineScope
 import com.example.petmaps.PermissionUtils
 import com.example.petmaps.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
 import com.example.petmaps.R
+import com.example.petmaps.app
+import com.example.petmaps.data.db.MarkEntity
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -48,6 +53,10 @@ class FragmentGMap :
      * user has installed Google Play services and returned to the app.
      */
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,10 +97,20 @@ class FragmentGMap :
             uiSettings.isZoomControlsEnabled = true
             uiSettings.isMapToolbarEnabled = true
             setOnMarkerClickListener(this@FragmentGMap)
-            setOnMapClickListener {
-                addMarker(MarkerOptions().position(it))
+            setOnMapClickListener {coordinates->
+                lifecycle.coroutineScope.launchWhenCreated {
+                    addMark(coordinates)
+                }
+
+
             }
         }
+    }
+
+   suspend fun addMark(coordinates: LatLng) {
+        map.addMarker(MarkerOptions().position(coordinates))
+        requireActivity().app.database.getMarkDao()
+
     }
 
     @SuppressLint("MissingPermission")
