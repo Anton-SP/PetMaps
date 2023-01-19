@@ -1,4 +1,4 @@
-package com.example.petmaps
+package com.example.petmaps.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,15 +13,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.petmaps.PermissionUtils
 import com.example.petmaps.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
+import com.example.petmaps.R
 
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 

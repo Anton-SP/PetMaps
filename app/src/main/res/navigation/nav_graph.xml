@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentGMap"
-        android:name="com.example.petmaps.FragmentGMap"
+        android:name="com.example.petmaps.ui.FragmentGMap"
         android:label="fragment_g_map"
         tools:layout="@layout/fragment_g_map" />
 </navigation>
