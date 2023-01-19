@@ -17,13 +17,21 @@ import com.example.petmaps.PermissionUtils.PermissionDeniedDialog.Companion.newI
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
+import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
-    GoogleMap.OnMyLocationClickListener, OnMapReadyCallback,
+class FragmentGMap :
+    Fragment(),
+    GoogleMap.OnMyLocationButtonClickListener,
+    GoogleMap.OnMyLocationClickListener,
+    OnMarkerClickListener,
+    OnMarkerDragListener,
+    OnMapReadyCallback,
     ActivityCompat.OnRequestPermissionsResultCallback {
 
     private var permissionDenied = false
@@ -57,7 +65,6 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
     override fun onMyLocationButtonClick(): Boolean {
         Toast.makeText(requireContext(), "MyLocation button clicked", Toast.LENGTH_SHORT)
             .show()
-
         return false
     }
 
@@ -67,17 +74,23 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
     }
 
     override fun onMapReady(callbackMap: GoogleMap) {
-        map = callbackMap
-        map.setPadding(0,0,12,0)
-        map.uiSettings.isZoomControlsEnabled = true
-        map.uiSettings.isMapToolbarEnabled = true
+        setMap(callbackMap)
         callbackMap.setOnMyLocationButtonClickListener(this)
         callbackMap.setOnMyLocationClickListener(this)
         enableMyLocation()
-        map.setOnMapClickListener {
-            //map.clear()
-            map.addMarker(MarkerOptions().position(it))
 
+    }
+
+    private fun setMap(callbackMap: GoogleMap) {
+        map = callbackMap
+        with(map) {
+            setPadding(0, 0, 12, 0)
+            uiSettings.isZoomControlsEnabled = true
+            uiSettings.isMapToolbarEnabled = true
+            setOnMarkerClickListener(this@FragmentGMap)
+            setOnMapClickListener {
+                addMarker(MarkerOptions().position(it))
+            }
         }
     }
 
@@ -142,6 +155,26 @@ class FragmentGMap : Fragment(), GoogleMap.OnMyLocationButtonClickListener,
     companion object {
 
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+    }
+
+    override fun onMarkerClick(marker: Marker): Boolean {
+        Toast.makeText(
+            requireContext(), " marker lat-long ${marker.position}",
+            Toast.LENGTH_SHORT
+        ).show()
+        return false
+    }
+
+    override fun onMarkerDrag(p0: Marker) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMarkerDragEnd(p0: Marker) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMarkerDragStart(p0: Marker) {
+        TODO("Not yet implemented")
     }
 }
 
