@@ -14,12 +14,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.coroutineScope
-import com.example.petmaps.PermissionUtils
-import com.example.petmaps.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.petmaps.MarkListState
+import com.example.petmaps.utils.PermissionUtils
+import com.example.petmaps.utils.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
 import com.example.petmaps.R
 import com.example.petmaps.app
-import com.example.petmaps.data.db.MarkEntity
+import com.example.petmaps.data.repo.LocalRepo
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -29,6 +34,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.launch
 
 class FragmentGMap :
     Fragment(),
@@ -43,20 +49,15 @@ class FragmentGMap :
 
     private lateinit var map: GoogleMap
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera.
-     * In this case, we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to
-     * install it inside the SupportMapFragment. This method will only be triggered once the
-     * user has installed Google Play services and returned to the app.
-     */
+    private val markViewModel: MarkViewModel by viewModels {
+        MarkViewModel.MarkViewModelFactory(LocalRepo(requireActivity().app.database.getMarkDao()))
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -69,6 +70,45 @@ class FragmentGMap :
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+
+        getMarkerList()
+        collectListFlow()
+
+
+    }
+
+    private fun collectListFlow() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                markViewModel.getStateFlow().collect { state ->
+                    checkListState(state)
+                }
+            }
+        }
+    }
+
+    private fun checkListState(state: MarkListState) {
+        when (state) {
+            is MarkListState.Loading -> {
+                Toast.makeText(requireContext(), "loading marker list", Toast.LENGTH_SHORT).show()
+            }
+            is MarkListState.ListSuccess -> {
+                Toast.makeText(requireContext(), "Load SUCCESS", Toast.LENGTH_SHORT).show()
+            }
+            is MarkListState.Error -> {
+                Toast.makeText(requireContext(), state.message,Toast.LENGTH_SHORT).show()
+            }
+            is MarkListState.DeleteSuccess -> {
+                Toast.makeText(requireContext(), "delete done", Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+
+    }
+
+    private fun getMarkerList() {
+        markViewModel.getMarkList()
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -97,19 +137,16 @@ class FragmentGMap :
             uiSettings.isZoomControlsEnabled = true
             uiSettings.isMapToolbarEnabled = true
             setOnMarkerClickListener(this@FragmentGMap)
-            setOnMapClickListener {coordinates->
-                lifecycle.coroutineScope.launchWhenCreated {
-                    addMark(coordinates)
-                }
+            setOnMapClickListener { coordinates ->
+                addMark(coordinates)
 
 
             }
         }
     }
 
-   suspend fun addMark(coordinates: LatLng) {
+    private fun addMark(coordinates: LatLng) {
         map.addMarker(MarkerOptions().position(coordinates))
-        requireActivity().app.database.getMarkDao()
 
     }
 

@@ -1,4 +1,4 @@
-package com.example.petmaps
+package com.example.petmaps.utils
 
 import android.Manifest
 import android.Manifest.permission
@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
+import com.example.petmaps.R
 
 object PermissionUtils {
 

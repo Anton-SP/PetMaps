@@ -2,6 +2,7 @@ package com.example.petmaps.data.db
 
 import androidx.room.*
 
+@Dao
 interface MarkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMark(mark: MarkEntity):Long

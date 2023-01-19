@@ -1,8 +1,8 @@
 package com.example.petmaps.data.repo
 
-import com.example.petmaps.data.db.MarkEntity
+import com.example.petmaps.data.Mark
 
 interface MarkRepo {
 
-    fun getMarkers(): List<MarkEntity>
+   suspend fun getMarkers(): List<Mark>
 }
