@@ -140,13 +140,13 @@ class FragmentGMap :
             setOnMapClickListener { coordinates ->
                 addMark(coordinates)
 
-
             }
         }
     }
 
     private fun addMark(coordinates: LatLng) {
         map.addMarker(MarkerOptions().position(coordinates))
+        markViewModel.addMark(coordinates)
 
     }
 
