@@ -24,6 +24,7 @@ import com.example.petmaps.utils.PermissionUtils
 import com.example.petmaps.utils.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
 import com.example.petmaps.R
 import com.example.petmaps.app
+import com.example.petmaps.data.Mark
 import com.example.petmaps.data.repo.LocalRepo
 
 import com.google.android.gms.maps.GoogleMap
@@ -146,7 +147,12 @@ class FragmentGMap :
 
     private fun addMark(coordinates: LatLng) {
         map.addMarker(MarkerOptions().position(coordinates))
-        markViewModel.addMark(coordinates)
+        val mark = Mark(
+            id = 0,
+            coordinates = coordinates,
+            note = "some text"
+        )
+        markViewModel.save(mark)
 
     }
 

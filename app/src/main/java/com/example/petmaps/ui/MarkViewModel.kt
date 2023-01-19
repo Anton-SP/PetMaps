@@ -47,6 +47,19 @@ class MarkViewModel(
 
     }
 
+    fun save(mark: Mark) {
+        viewModelScope.launch {
+            createMarkState.emit(CreateMarkState.Nothing)
+            val markId = repository.create(mark = mark)
+            if (markId > 0) {
+                createMarkState.emit(CreateMarkState.Success(mark))
+            } else {
+                createMarkState.emit(CreateMarkState.Error("Не удалось сохранить игру"))
+            }
+        }
+
+    }
+
     companion object {
         const val MESSAGE_DONT_FIND_MARK = "Cannot find marker"
         const val MESSAGE_EMPTY_LIST = "No markers set yet"
