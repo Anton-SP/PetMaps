@@ -57,7 +57,7 @@ class FragmentGMap :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        getMarkerList()
+
 
     }
 
@@ -73,10 +73,6 @@ class FragmentGMap :
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-        collectListFlow()
-        Log.d("HAPPY","HAH")
-
-
     }
 
     private fun collectListFlow() {
@@ -126,6 +122,8 @@ class FragmentGMap :
 
     override fun onMapReady(callbackMap: GoogleMap) {
         setMap(callbackMap)
+        getMarkerList()
+        collectListFlow()
         callbackMap.setOnMyLocationButtonClickListener(this)
         callbackMap.setOnMyLocationClickListener(this)
         enableMyLocation()
@@ -146,10 +144,10 @@ class FragmentGMap :
         }
     }
 
-    private fun addMark(markers:List<Mark>) {
-        markers.forEach() {mark ->
-            Log.d("HAPPY",mark.id.toString())
-         map.addMarker(MarkerOptions().position(mark.coordinates))
+    private fun addMark(markers: List<Mark>) {
+        markers.forEach() { mark ->
+            Log.d("HAPPY", mark.id.toString())
+            map.addMarker(MarkerOptions().position(mark.coordinates))
 
         }
         //mapViewModel.save(mark)

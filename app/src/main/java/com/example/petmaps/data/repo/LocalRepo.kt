@@ -5,6 +5,8 @@ import com.example.petmaps.data.Mark
 import com.example.petmaps.data.db.MarkDao
 import com.example.petmaps.utils.toEntity
 import com.example.petmaps.utils.toMark
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LocalRepo(private val markDao: MarkDao) : MarkRepo {
     override suspend fun create(mark: Mark): Long {
@@ -16,10 +18,12 @@ class LocalRepo(private val markDao: MarkDao) : MarkRepo {
     }
 
 
-    override suspend fun getMarkers(): List<Mark> =
+    override suspend fun getMarkers(): List<Mark> = withContext(Dispatchers.IO){
         markDao.getMarkerList().map { entity ->
             entity.toMark()
         }
+    }
+
 
     companion object {
         const val TEMPLATE_WAS_NOT_CREATED = -1L
