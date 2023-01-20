@@ -7,7 +7,19 @@
 
     <fragment
         android:id="@+id/fragmentGMap"
-        android:name="com.example.petmaps.ui.FragmentGMap"
+        android:name="com.example.petmaps.ui.map.FragmentGMap"
         android:label="fragment_g_map"
-        tools:layout="@layout/fragment_g_map" />
+        tools:layout="@layout/fragment_g_map" >
+        <action
+            android:id="@+id/action_fragmentGMap_to_fragmentCreateMarker"
+            app:destination="@id/fragmentCreateMarker" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentCreateMarker"
+        android:name="com.example.petmaps.ui.marker.FragmentCreateMarker"
+        android:label="FragmentCreateMarker" >
+        <action
+            android:id="@+id/action_fragmentCreateMarker_to_fragmentGMap"
+            app:destination="@id/fragmentGMap" />
+    </fragment>
 </navigation>

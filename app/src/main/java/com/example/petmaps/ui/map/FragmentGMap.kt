@@ -1,4 +1,4 @@
-package com.example.petmaps.ui
+package com.example.petmaps.ui.map
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.petmaps.MarkListState
@@ -26,6 +25,7 @@ import com.example.petmaps.R
 import com.example.petmaps.app
 import com.example.petmaps.data.Mark
 import com.example.petmaps.data.repo.LocalRepo
+import com.example.petmaps.utils.navigate
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -50,8 +50,8 @@ class FragmentGMap :
 
     private lateinit var map: GoogleMap
 
-    private val markViewModel: MarkViewModel by viewModels {
-        MarkViewModel.MarkViewModelFactory(LocalRepo(requireActivity().app.database.getMarkDao()))
+    private val mapViewModel: MapViewModel by viewModels {
+        MapViewModel.MapViewModelFactory(LocalRepo(requireActivity().app.database.getMarkDao()))
     }
 
     override fun onAttach(context: Context) {
@@ -81,7 +81,7 @@ class FragmentGMap :
     private fun collectListFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                markViewModel.getStateFlow().collect { state ->
+                mapViewModel.getStateFlow().collect { state ->
                     checkListState(state)
                 }
             }
@@ -109,7 +109,7 @@ class FragmentGMap :
     }
 
     private fun getMarkerList() {
-        markViewModel.getMarkList()
+        mapViewModel.getMarkList()
     }
 
     override fun onMyLocationButtonClick(): Boolean {
@@ -140,7 +140,7 @@ class FragmentGMap :
             setOnMarkerClickListener(this@FragmentGMap)
             setOnMapClickListener { coordinates ->
                 addMark(coordinates)
-
+                navigate(R.id.action_fragmentGMap_to_fragmentCreateMarker,coordinates)
             }
         }
     }
@@ -152,7 +152,7 @@ class FragmentGMap :
             coordinates = coordinates,
             note = "some text"
         )
-        markViewModel.save(mark)
+        mapViewModel.save(mark)
 
     }
 

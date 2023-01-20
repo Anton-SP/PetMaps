@@ -1,4 +1,4 @@
-package com.example.petmaps.ui
+package com.example.petmaps.ui.map
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -6,16 +6,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.petmaps.MarkListState
 import com.example.petmaps.data.Mark
 import com.example.petmaps.data.repo.MarkRepo
-import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class MarkViewModel(
+class MapViewModel(
     private val repository: MarkRepo
 ) : ViewModel() {
 
-    private val createMarkState = MutableStateFlow<CreateMarkState>(CreateMarkState.Nothing)
+    //private val createMarkState = MutableStateFlow<CreateMarkState>(CreateMarkState.Nothing)
 
     val stateFlow = MutableStateFlow<MarkListState>(MarkListState.Loading)
 
@@ -38,25 +37,17 @@ class MarkViewModel(
 
     }
 
-    suspend fun addMark(coordinates: LatLng) {
-        var mark = Mark(id = 0,coordinates = coordinates, note = "some text")
-        createMarkState.emit(CreateMarkState.Nothing)
-        viewModelScope.launch {
-            createMarkState.emit(CreateMarkState.Success(mark))
-        }
-
-    }
 
     fun save(mark: Mark) {
-        viewModelScope.launch {
+       /* viewModelScope.launch {
             createMarkState.emit(CreateMarkState.Nothing)
             val markId = repository.create(mark = mark)
             if (markId > 0) {
                 createMarkState.emit(CreateMarkState.Success(mark))
             } else {
-                createMarkState.emit(CreateMarkState.Error("Не удалось сохранить игру"))
+                createMarkState.emit(CreateMarkState.Error("Не удалось сохранить маркер игру"))
             }
-        }
+        }*/
 
     }
 
@@ -66,14 +57,14 @@ class MarkViewModel(
         const val MESSAGE_LIST_ERROR = "Loading error"
     }
 
-    class MarkViewModelFactory(private val repo: MarkRepo) : ViewModelProvider.Factory {
+    class MapViewModelFactory(private val repo: MarkRepo) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T =
-            MarkViewModel(repo) as T
+            MapViewModel(repo) as T
     }
 
-    sealed class CreateMarkState {
-        object Nothing : CreateMarkState()
+    /*sealed class CreateMarkState {
+     //   object Nothing : CreateMarkState()
         data class Success(val mark: Mark) : CreateMarkState()
         data class Error(val message: String) : CreateMarkState()
-    }
+    }*/
 }
