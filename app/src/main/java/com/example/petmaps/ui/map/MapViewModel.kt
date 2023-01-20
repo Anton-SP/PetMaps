@@ -14,8 +14,6 @@ class MapViewModel(
     private val repository: MarkRepo
 ) : ViewModel() {
 
-    //private val createMarkState = MutableStateFlow<CreateMarkState>(CreateMarkState.Nothing)
-
     val stateFlow = MutableStateFlow<MarkListState>(MarkListState.Loading)
 
     fun getStateFlow() = stateFlow.asStateFlow()
@@ -37,9 +35,6 @@ class MapViewModel(
 
     }
 
-
-
-
     companion object {
         const val MESSAGE_DONT_FIND_MARK = "Cannot find marker"
         const val MESSAGE_EMPTY_LIST = "No markers set yet"
@@ -50,6 +45,5 @@ class MapViewModel(
         override fun <T : ViewModel> create(modelClass: Class<T>): T =
             MapViewModel(repo) as T
     }
-
 
 }

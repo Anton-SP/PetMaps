@@ -55,12 +55,6 @@ class FragmentGMap :
         MapViewModel.MapViewModelFactory(LocalRepo(requireActivity().app.database.getMarkDao()))
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -99,7 +93,6 @@ class FragmentGMap :
             is MarkListState.DeleteSuccess -> {
                 Toast.makeText(requireContext(), "delete done", Toast.LENGTH_SHORT).show()
             }
-
 
         }
 

@@ -14,18 +14,16 @@ class LocalRepo(private val markDao: MarkDao) : MarkRepo {
         if (markId > 0) {
             return markId
         }
-        return TEMPLATE_WAS_NOT_CREATED
+        return MARK_WAS_NOT_CREATED
     }
 
-
-    override suspend fun getMarkers(): List<Mark> = withContext(Dispatchers.IO){
+    override suspend fun getMarkers(): List<Mark> = withContext(Dispatchers.IO) {
         markDao.getMarkerList().map { entity ->
             entity.toMark()
         }
     }
 
-
     companion object {
-        const val TEMPLATE_WAS_NOT_CREATED = -1L
+        const val MARK_WAS_NOT_CREATED = -1L
     }
 }
