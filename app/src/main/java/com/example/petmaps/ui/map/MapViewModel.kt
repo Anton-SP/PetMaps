@@ -38,18 +38,7 @@ class MapViewModel(
     }
 
 
-    fun save(mark: Mark) {
-       /* viewModelScope.launch {
-            createMarkState.emit(CreateMarkState.Nothing)
-            val markId = repository.create(mark = mark)
-            if (markId > 0) {
-                createMarkState.emit(CreateMarkState.Success(mark))
-            } else {
-                createMarkState.emit(CreateMarkState.Error("Не удалось сохранить маркер игру"))
-            }
-        }*/
 
-    }
 
     companion object {
         const val MESSAGE_DONT_FIND_MARK = "Cannot find marker"
@@ -62,9 +51,5 @@ class MapViewModel(
             MapViewModel(repo) as T
     }
 
-    /*sealed class CreateMarkState {
-     //   object Nothing : CreateMarkState()
-        data class Success(val mark: Mark) : CreateMarkState()
-        data class Error(val message: String) : CreateMarkState()
-    }*/
+
 }

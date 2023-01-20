@@ -24,7 +24,7 @@ abstract class MarkersDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MarkersDatabase::class.java,
-                    "users_markers"
+                    "markers_db"
                 ).build()
                 INSTANCE = instance
                 instance

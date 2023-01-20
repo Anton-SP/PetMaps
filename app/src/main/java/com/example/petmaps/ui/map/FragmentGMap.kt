@@ -8,6 +8,7 @@ import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,7 @@ class FragmentGMap :
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        getMarkerList()
 
     }
 
@@ -71,9 +73,8 @@ class FragmentGMap :
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
-
-        getMarkerList()
         collectListFlow()
+        Log.d("HAPPY","HAH")
 
 
     }
@@ -94,10 +95,10 @@ class FragmentGMap :
                 Toast.makeText(requireContext(), "loading marker list", Toast.LENGTH_SHORT).show()
             }
             is MarkListState.ListSuccess -> {
-                Toast.makeText(requireContext(), "Load SUCCESS", Toast.LENGTH_SHORT).show()
+                addMark(state.data)
             }
             is MarkListState.Error -> {
-                Toast.makeText(requireContext(), state.message,Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
             }
             is MarkListState.DeleteSuccess -> {
                 Toast.makeText(requireContext(), "delete done", Toast.LENGTH_SHORT).show()
@@ -128,6 +129,7 @@ class FragmentGMap :
         callbackMap.setOnMyLocationButtonClickListener(this)
         callbackMap.setOnMyLocationClickListener(this)
         enableMyLocation()
+        getMarkerList()
 
     }
 
@@ -139,20 +141,18 @@ class FragmentGMap :
             uiSettings.isMapToolbarEnabled = true
             setOnMarkerClickListener(this@FragmentGMap)
             setOnMapClickListener { coordinates ->
-                addMark(coordinates)
-                navigate(R.id.action_fragmentGMap_to_fragmentCreateMarker,coordinates)
+                navigate(R.id.action_fragmentGMap_to_fragmentCreateMarker, coordinates)
             }
         }
     }
 
-    private fun addMark(coordinates: LatLng) {
-        map.addMarker(MarkerOptions().position(coordinates))
-        val mark = Mark(
-            id = 0,
-            coordinates = coordinates,
-            note = "some text"
-        )
-        mapViewModel.save(mark)
+    private fun addMark(markers:List<Mark>) {
+        markers.forEach() {mark ->
+            Log.d("HAPPY",mark.id.toString())
+         map.addMarker(MarkerOptions().position(mark.coordinates))
+
+        }
+        //mapViewModel.save(mark)
 
     }
 

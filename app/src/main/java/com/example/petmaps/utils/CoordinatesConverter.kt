@@ -6,16 +6,19 @@ import java.util.Arrays
 
 class CoordinatesConverter {
     @TypeConverter
-    fun fromLatLng(coordinates: LatLng):String {
-        return coordinates.toString()
+    fun fromLatLng(coordinates: LatLng): String {
+        var lat = coordinates.latitude.toString()
+        var lng = coordinates.longitude.toString()
+        return lat+","+lng
     }
 
     @TypeConverter
-    fun toLatLng (coordinates: String):LatLng {
-        var list =  listOf(coordinates.split(","))
+    fun toLatLng(coordinates: String): LatLng {
+        var list =(coordinates.split(","))
+
         return LatLng(
-            list[0] as Double,
-            list[1] as Double
+            list[0].toDouble(),
+            list[1].toDouble()
         )
     }
 }

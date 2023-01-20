@@ -7,7 +7,7 @@ interface MarkDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMark(mark: MarkEntity):Long
 
-    @Query("SELECT * FROM markers ORDER BY id DESC")
+    @Query("SELECT * FROM markers ORDER BY id")
     fun getMarkerList():List<MarkEntity>
 
     @Delete
