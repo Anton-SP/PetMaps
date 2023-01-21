@@ -10,7 +10,8 @@ import com.example.petmaps.data.Mark
 import com.example.petmaps.databinding.ItemMarkerBinding
 
 class MarkersAdapter(
-    private val onClickDelete: (Mark) -> Unit
+    private val onClickDelete: (Mark) -> Unit,
+    private val onClickSave:(Mark) -> Unit
 ) : RecyclerView.Adapter<MarkersAdapter.MarkerViewHolder>() {
 
     private val markers = ArrayList<Mark>()
@@ -19,7 +20,11 @@ class MarkersAdapter(
         val binding = ItemMarkerBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        val holder = MarkerViewHolder(binding = binding, onClickDelete = onClickDelete)
+        val holder = MarkerViewHolder(
+            binding = binding,
+            onClickDelete = onClickDelete,
+            onClickSave = onClickSave
+            )
         holder.setListeners()
         return holder
     }
@@ -29,7 +34,6 @@ class MarkersAdapter(
     }
 
     override fun onBindViewHolder(holder: MarkerViewHolder, position: Int) {
-        //    holder.updatePositions(position = position)
         holder.bind(marker = markers[position])
     }
 
@@ -45,7 +49,9 @@ class MarkersAdapter(
     }
 
     inner class MarkerViewHolder(
-        private val binding: ItemMarkerBinding, private val onClickDelete: (Mark) -> Unit
+        private val binding: ItemMarkerBinding,
+        private val onClickDelete: (Mark) -> Unit,
+        private val onClickSave:(Mark) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private val edMarkerNoteListener = object : TextWatcher {
@@ -73,6 +79,9 @@ class MarkersAdapter(
                 btnDelete.setOnClickListener {
                     onClickDelete.invoke(marker)
                 }
+                btnSaveMarker.setOnClickListener {
+                    onClickSave.invoke(marker)
+                }
 
                 tvMarkerNumberValue.text = marker.id.toString()
                 tvMarkerNumberLatitudeValue.text = marker.coordinates.latitude.toString()
@@ -82,14 +91,5 @@ class MarkersAdapter(
         }
     }
 
-    private class DiffUtilsItemCallbackImpl : DiffUtil.ItemCallback<Mark>() {
-        override fun areItemsTheSame(oldItem: Mark, newItem: Mark): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Mark, newItem: Mark): Boolean {
-            return oldItem == newItem
-        }
-    }
 
 }

@@ -16,7 +16,8 @@ class MarkerListViewModel(
 ) : ViewModel() {
     private val listState =
         MutableStateFlow<MarkListState>(MarkListState.Loading)
-    //    MutableStateFlow<MarkerListViewModel.MarkListState>(MarkerListViewModel.MarkListState.Nothing)
+    private val saveMarkerState = MutableStateFlow<SaveMarkState>(SaveMarkState.Nothing)
+
 
     fun getStateFlow() = listState.asStateFlow()
 
@@ -48,6 +49,19 @@ class MarkerListViewModel(
         }
     }
 
+    fun save(mark: Mark) {
+        viewModelScope.launch {
+            saveMarkerState.emit(SaveMarkState.Nothing)
+            val markId = repository.create(mark = mark)
+            if (markId > 0) {
+                saveMarkerState.emit(SaveMarkState.Success(mark))
+            } else {
+                saveMarkerState.emit(SaveMarkState.Error("cannot save marker"))
+            }
+        }
+    }
+
+
     class MarkerListViewModelFactory(private val repo: MarkRepo) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T =
             MarkerListViewModel(repo) as T
@@ -58,5 +72,12 @@ class MarkerListViewModel(
         const val MESSAGE_EMPTY_LIST = "No markers set yet"
         const val MESSAGE_LIST_ERROR = "Loading error"
     }
+
+    sealed class SaveMarkState {
+        object Nothing : SaveMarkState()
+        data class Success(val mark: Mark) : SaveMarkState()
+        data class Error(val message: String) : SaveMarkState()
+    }
+
 
 }

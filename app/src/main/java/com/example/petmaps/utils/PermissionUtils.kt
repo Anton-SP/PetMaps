@@ -27,11 +27,11 @@ object PermissionUtils {
         if (
             ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
+                permission.ACCESS_FINE_LOCATION
             ) ||
             ActivityCompat.shouldShowRequestPermissionRationale(
                 activity,
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                permission.ACCESS_COARSE_LOCATION
             )
         ) {
             // Display a dialog with rationale.
@@ -101,15 +101,7 @@ object PermissionUtils {
         }
     }
 
-    /**
-     * A dialog that explains the use of the location permission and requests the necessary
-     * permission.
-     *
-     *
-     * The activity should implement
-     * [androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback]
-     * to handle permit or denial of this permission request.
-     */
+
     class RationaleDialog : DialogFragment() {
         private var finishActivity = false
         override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -123,8 +115,8 @@ object PermissionUtils {
                     ActivityCompat.requestPermissions(
                         requireActivity(),
                         arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_COARSE_LOCATION
+                            permission.ACCESS_FINE_LOCATION,
+                            permission.ACCESS_COARSE_LOCATION
                         ),
                         requestCode
                     )
@@ -151,19 +143,7 @@ object PermissionUtils {
             private const val ARGUMENT_PERMISSION_REQUEST_CODE = "requestCode"
             private const val ARGUMENT_FINISH_ACTIVITY = "finish"
 
-            /**
-             * Creates a new instance of a dialog displaying the rationale for the use of the location
-             * permission.
-             *
-             *
-             * The permission is requested after clicking 'ok'.
-             *
-             * @param requestCode    Id of the request that is used to request the permission. It is
-             * returned to the
-             * [androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback].
-             * @param finishActivity Whether the calling Activity should be finished if the dialog is
-             * cancelled.
-             */
+
             fun newInstance(
                 requestCode: Int,
                 finishActivity: Boolean

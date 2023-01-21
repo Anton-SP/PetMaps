@@ -1,6 +1,6 @@
 package com.example.petmaps.data.repo
 
-import android.util.Log
+
 import com.example.petmaps.data.Mark
 import com.example.petmaps.data.db.MarkDao
 import com.example.petmaps.utils.toEntity
@@ -24,7 +24,7 @@ class LocalRepo(private val markDao: MarkDao) : MarkRepo {
     }
 
     override suspend fun delete(mark: Mark): Int {
-       return markDao.delete(mark.toEntity())
+        return markDao.delete(mark.toEntity())
     }
 
     companion object {

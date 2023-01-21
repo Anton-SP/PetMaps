@@ -29,13 +29,12 @@ class FragmentMarkerList : Fragment(R.layout.fragment_marker_list) {
         MarkersAdapter(
             onClickDelete = { marker ->
                 markerListViewModel.deleteMarker(marker)
+            },
+            onClickSave = { marker ->
+                markerListViewModel.save(marker)
+
             }
         )
-       /* { position ->
-            if (adapter.itemCount > 1) {
-                adapter.remove(position)
-            }
-        }*/
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

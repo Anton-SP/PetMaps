@@ -7,7 +7,6 @@ import android.location.Location
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,6 @@ import com.example.petmaps.app
 import com.example.petmaps.data.Mark
 import com.example.petmaps.data.repo.LocalRepo
 import com.example.petmaps.utils.navigate
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
@@ -75,7 +73,6 @@ class FragmentGMap :
         callbackMap.setOnMyLocationClickListener(this)
         enableMyLocation()
     }
-
 
 
     private fun collectListFlow() {
