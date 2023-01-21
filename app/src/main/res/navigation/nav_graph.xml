@@ -22,4 +22,8 @@
             android:id="@+id/action_fragmentCreateMarker_to_fragmentGMap"
             app:destination="@id/fragmentGMap" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentMarkerList"
+        android:name="com.example.petmaps.ui.list.FragmentMarkerList"
+        android:label="FragmentMarkerList" />
 </navigation>

@@ -6,4 +6,5 @@ interface MarkRepo {
 
     suspend fun create(mark: Mark): Long
     suspend fun getMarkers(): List<Mark>
+    suspend fun delete(mark: Mark): Int
 }

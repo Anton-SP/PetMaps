@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/tv_marker_label"
+        android:id="@+id/tv_marker_number_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
-        android:text="@string/label_new_marker"
+        android:text="@string/marker_number_label"
         android:textColor="@color/black"
         android:textSize="@dimen/main_label_size"
         android:textStyle="bold"
@@ -17,7 +17,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_marker_latitude_label"
+        android:id="@+id/tv_marker_number_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:hint="12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_label_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_marker_number_label"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_marker_number_latitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
@@ -25,10 +37,10 @@
         android:textSize="@dimen/text_common"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_marker_label" />
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_label" />
 
     <TextView
-        android:id="@+id/tv_marker_longitude_label"
+        android:id="@+id/tv_marker_number_longitude_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
@@ -36,29 +48,29 @@
         android:textSize="@dimen/text_common"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_marker_latitude_label" />
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_latitude_label" />
 
     <TextView
-        android:id="@+id/tv_marker_latitude_value"
+        android:id="@+id/tv_marker_number_latitude_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
         android:textColor="@color/black"
         android:textSize="@dimen/text_common"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tv_marker_longitude_label"
-        app:layout_constraintTop_toBottomOf="@id/tv_marker_label" />
+        app:layout_constraintStart_toEndOf="@+id/tv_marker_number_longitude_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_label" />
 
     <TextView
-        android:id="@+id/tv_marker_longitude_value"
+        android:id="@+id/tv_marker_number_longitude_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
         android:textColor="@color/black"
         android:textSize="@dimen/text_common"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tv_marker_longitude_label"
-        app:layout_constraintTop_toBottomOf="@id/tv_marker_latitude_value" />
+        app:layout_constraintStart_toEndOf="@+id/tv_marker_number_longitude_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_latitude_value" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_marker_note"
@@ -68,7 +80,7 @@
         android:hint="@string/description_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_marker_longitude_label">
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_longitude_label">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_marker_note"
@@ -77,26 +89,25 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btn_save"
+        android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
-        android:text="@string/button_save_label"
+        android:text="@string/btn_delete_label"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_cancel" />
+        app:layout_constraintTop_toBottomOf="@id/til_marker_note"
+        app:layout_constraintEnd_toStartOf="@id/btn_save_marker" />
 
     <Button
-        android:id="@+id/btn_cancel"
+        android:id="@+id/btn_save_marker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_common"
         android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
-        android:text="@string/button_cancel_label"
+        android:text="@string/btn_save_label"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_marker_note"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.petmaps
+package com.example.petmaps.ui
 
 import com.example.petmaps.data.Mark
 

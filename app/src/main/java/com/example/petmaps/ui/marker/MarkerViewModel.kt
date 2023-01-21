@@ -12,16 +12,16 @@ class MarkerViewModel(
     private val repository: MarkRepo
 ) : ViewModel() {
     private val createMarkState =
-        MutableStateFlow<MarkerViewModel.CreateMarkState>(MarkerViewModel.CreateMarkState.Nothing)
+        MutableStateFlow<CreateMarkState>(CreateMarkState.Nothing)
 
     fun save(mark: Mark) {
         viewModelScope.launch {
-            createMarkState.emit(MarkerViewModel.CreateMarkState.Nothing)
+            createMarkState.emit(CreateMarkState.Nothing)
             val markId = repository.create(mark = mark)
             if (markId > 0) {
-                createMarkState.emit(MarkerViewModel.CreateMarkState.Success(mark))
+                createMarkState.emit(CreateMarkState.Success(mark))
             } else {
-                createMarkState.emit(MarkerViewModel.CreateMarkState.Error("cannot save marker"))
+                createMarkState.emit(CreateMarkState.Error("cannot save marker"))
             }
         }
     }

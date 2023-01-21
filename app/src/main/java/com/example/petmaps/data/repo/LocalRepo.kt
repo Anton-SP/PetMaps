@@ -23,6 +23,10 @@ class LocalRepo(private val markDao: MarkDao) : MarkRepo {
         }
     }
 
+    override suspend fun delete(mark: Mark): Int {
+       return markDao.delete(mark.toEntity())
+    }
+
     companion object {
         const val MARK_WAS_NOT_CREATED = -1L
     }

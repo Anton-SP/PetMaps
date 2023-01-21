@@ -3,8 +3,7 @@ package com.example.petmaps.ui.map
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.example.petmaps.MarkListState
-import com.example.petmaps.data.Mark
+import com.example.petmaps.ui.MarkListState
 import com.example.petmaps.data.repo.MarkRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,7 +31,6 @@ class MapViewModel(
                 stateFlow.emit(MarkListState.Error(MESSAGE_LIST_ERROR))
             }
         }
-
     }
 
     companion object {

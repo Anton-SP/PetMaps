@@ -2,7 +2,6 @@ package com.example.petmaps.ui.map
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import androidx.fragment.app.Fragment
@@ -19,7 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.petmaps.MarkListState
+import com.example.petmaps.ui.MarkListState
 import com.example.petmaps.utils.PermissionUtils
 import com.example.petmaps.utils.PermissionUtils.PermissionDeniedDialog.Companion.newInstance
 import com.example.petmaps.R
@@ -33,7 +32,6 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.GoogleMap.OnMarkerDragListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
@@ -68,6 +66,17 @@ class FragmentGMap :
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
     }
+
+    override fun onMapReady(callbackMap: GoogleMap) {
+        setMap(callbackMap)
+        getMarkerList()
+        collectListFlow()
+        callbackMap.setOnMyLocationButtonClickListener(this)
+        callbackMap.setOnMyLocationClickListener(this)
+        enableMyLocation()
+    }
+
+
 
     private fun collectListFlow() {
         viewLifecycleOwner.lifecycleScope.launch {
@@ -113,16 +122,6 @@ class FragmentGMap :
             .show()
     }
 
-    override fun onMapReady(callbackMap: GoogleMap) {
-        setMap(callbackMap)
-        getMarkerList()
-        collectListFlow()
-        callbackMap.setOnMyLocationButtonClickListener(this)
-        callbackMap.setOnMyLocationClickListener(this)
-        enableMyLocation()
-        getMarkerList()
-
-    }
 
     private fun setMap(callbackMap: GoogleMap) {
         map = callbackMap
@@ -138,13 +137,11 @@ class FragmentGMap :
     }
 
     private fun addMark(markers: List<Mark>) {
+        map.clear()
         markers.forEach() { mark ->
-            Log.d("HAPPY", mark.id.toString())
             map.addMarker(MarkerOptions().position(mark.coordinates))
 
         }
-        //mapViewModel.save(mark)
-
     }
 
     @SuppressLint("MissingPermission")
