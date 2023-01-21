@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tv_marker_number_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:text="@string/marker_number_label"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_label_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_marker_number_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:hint="12"
+        android:textColor="@color/black"
+        android:textSize="@dimen/main_label_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_marker_number_label"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_marker_number_latitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:text="@string/latitude"
+        android:textSize="@dimen/text_common"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_label" />
+
+    <TextView
+        android:id="@+id/tv_marker_number_longitude_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:text="@string/longitude"
+        android:textSize="@dimen/text_common"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_latitude_label" />
+
+    <TextView
+        android:id="@+id/tv_marker_number_latitude_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_common"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_marker_number_longitude_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_label" />
+
+    <TextView
+        android:id="@+id/tv_marker_number_longitude_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_common"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tv_marker_number_longitude_label"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_latitude_value" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_marker_note"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:hint="@string/description_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_marker_number_longitude_label">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ed_marker_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
+        android:text="@string/btn_delete_label"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/til_marker_note"
+        app:layout_constraintEnd_toStartOf="@id/btn_save_marker" />
+
+    <Button
+        android:id="@+id/btn_save_marker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_common"
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
+        android:text="@string/btn_save_label"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/til_marker_note"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

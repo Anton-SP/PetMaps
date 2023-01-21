@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">PetMaps</string>
+    <string name="location_permission_denied">Location permission denied</string>
+    <string name="permission_required_toast">Require permission for correct work</string>
+    <string name="permission_rationale_location">"Provide rationale permission "</string>
+    <string name="label_new_marker">New marker</string>
+    <string name="latitude">Latitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="description_hint">Marker description (optional)</string>
+    <string name="button_save_label">SAVE</string>
+    <string name="button_cancel_label">CANCEL</string>
+    <string name="marker_number_label">Marker #</string>
+    <string name="btn_save_label">SAVE</string>
+    <string name="btn_delete_label">Delete</string>
 </resources>
